@@ -1,0 +1,1 @@
+class YearsKnownError < StandardError; end
