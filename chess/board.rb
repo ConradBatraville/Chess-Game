@@ -1,11 +1,13 @@
 require_relative 'piece'
 require 'byebug'
 
+
 class Board
+
 
   def initialize
     # debugger
-    @board = Array.new(8) { Array.new(8) }
+    @board = Array.new(8) { Array.new(8) { NullPiece.instance } }
     p populate_board
     # private
     # @sentinel = NullPiece
@@ -13,22 +15,34 @@ class Board
   end
 
     def move_piece(start_pos, end_pos)
-      board[start_pos] = nil
-      board[end_pos] = 
-      raise StandardError if piece(start_pos) 
+      
+      raise StandardError if self[start_pos] == NullPiece.instance
       raise StandardError unless valid_pos?(start_pos)
+      self[end_pos] = self[start_pos]
+      self[start_pos] = NullPiece.instance
+      
+      self[end_pos].pos = end_pos
+
     end
+
+    def show_piece(pos)
+      self[pos]
+    end
+
 
     def [](pos)
       row, col = pos
-      @board[row][col]
+      board[row][col]
     end
-
+    
     def []=(pos, piece)
-      @board[row][col] = piece
+      row, col = pos
+      board[row][col] = piece
     end
 
-
+    def valid_pos?(pos)
+      false
+    end
   
 
     def populate_board
@@ -45,8 +59,14 @@ class Board
       @board[0][3] = Piece.new("white", "Queen", [0, 3])
       @board[0][4] = Piece.new("white", "King", [0, 4])
 
-      @board[1][0..7] = Piece.new("white", "Pawn", [0, 0..7])
-
+      @board[1][0] = Piece.new("white", "Pawn", [1, 0])
+      @board[1][1] = Piece.new("white", "Pawn", [1, 1])
+      @board[1][2] = Piece.new("white", "Pawn", [1, 2])
+      @board[1][3] = Piece.new("white", "Pawn", [1, 3])
+      @board[1][4] = Piece.new("white", "Pawn", [1, 4])
+      @board[1][5] = Piece.new("white", "Pawn", [1, 5])
+      @board[1][6] = Piece.new("white", "Pawn", [1, 6])
+      @board[1][7] = Piece.new("white", "Pawn", [1, 7])
 
 
       @board[7][0] = Piece.new("black", "Rook", [7, 0])
@@ -61,10 +81,27 @@ class Board
       @board[7][3] = Piece.new("black", "Queen", [7, 3])
       @board[7][4] = Piece.new("black", "King", [7, 4])
 
-      @board[6][0..7] = Piece.new("black", "Pawn", [6, 0..7])
+      @board[6][0] = Piece.new("black", "Pawn", [6, 0])
+      @board[6][1] = Piece.new("black", "Pawn", [6, 1])
+      @board[6][2] = Piece.new("black", "Pawn", [6, 2])
+      @board[6][3] = Piece.new("black", "Pawn", [6, 3])
+      @board[6][4] = Piece.new("black", "Pawn", [6, 4])
+      @board[6][5] = Piece.new("black", "Pawn", [6, 5])
+      @board[6][6] = Piece.new("black", "Pawn", [6, 6])
+      @board[6][7] = Piece.new("black", "Pawn", [6, 7])
 
-      @board[2..5][0..7] = NullPiece.new
+
 
     end
+
+
+
+
+
+
+    private
+
+    attr_accessor :board
+
 
 end
