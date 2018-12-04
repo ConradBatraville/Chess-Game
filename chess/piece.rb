@@ -1,7 +1,7 @@
 require 'singleton'
 
 class Piece
-  attr_accessor :pos
+  attr_accessor :pos, :color, :name
 
   def initialize(color, name, pos)
     @color = color
@@ -14,6 +14,7 @@ class NullPiece < Piece
   include Singleton
   
   def initialize
+    @name = ""
   end
 
   
